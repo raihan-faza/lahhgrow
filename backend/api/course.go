@@ -7,12 +7,11 @@ import (
 	"gorm.io/gorm"
 )
 
-// blom di save ke db, blom bikin initializer dbnya
 func CreateCourse(c *gin.Context, db *gorm.DB) {
 	var course models.Course
 	err := c.ShouldBindJSON(&course)
 	if err != nil {
-		responses.BadRequest(c, err)
+		responses.BadRequest(c, "failed to create course")
 		return
 	}
 	db.Create(&course)
@@ -20,13 +19,29 @@ func CreateCourse(c *gin.Context, db *gorm.DB) {
 	return
 }
 
-func UpdateCourse(c *gin.Context) {
+func UpdateCourse(c *gin.Context, db *gorm.DB) {
 	var course models.Course
-	err := c.ShouldBindJSON(&course)
-	if err != nil {
-		responses.BadRequest(c, err)
+	var input models.Course
+	var fail_message = "failed to update course"
+	course_id := c.DefaultQuery("id", "")
+	if course_id == "" {
+		responses.BadRequest(c, fail_message)
 		return
 	}
-	responses.GoodRequest(c, "course updated")
+	err := c.ShouldBindJSON(&input)
+	if err != nil {
+		responses.BadRequest(c, fail_message)
+		return
+	}
+	db_err := db.First(&course, course_id)
+	if db_err != nil {
+		responses.BadRequest(c, fail_message)
+		return
+	}
+	update_data := db.Model(&course).Updates(&input)
+	if update_data.Error != nil {
+		responses.BadRequest(c, fail_message)
+	}
+	responses.GoodRequest(c, "course updated succesfully")
 	return
 }
