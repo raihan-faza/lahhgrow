@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func BadRequest(c *gin.Context, err error) {
+func BadRequest(c *gin.Context, err string) {
 	c.JSON(http.StatusBadRequest, gin.H{
 		"message": err,
 	})
