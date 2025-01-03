@@ -20,7 +20,7 @@ func file_exist(file_name string) error {
 func GetVideo(c *gin.Context, file_name string) {
 	err := file_exist(file_name)
 	if err != nil {
-		responses.BadRequest(c, err)
+		responses.BadRequest(c, "file doesnt exist")
 		return
 	}
 	responses.GoodRequest(c, file_name)
