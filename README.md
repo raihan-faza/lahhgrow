@@ -1,9 +1,9 @@
 # lahhgrow
 
 ### Todo
-- create course
-- update course
-- delete course
+- create course (done)
+- update course (done)
+- delete course (done)
 - update video
 - delete video
 - create account
