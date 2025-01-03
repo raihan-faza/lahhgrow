@@ -63,6 +63,7 @@ func DeleteCourse(c *gin.Context, db *gorm.DB) {
 		return
 	}
 	responses.GoodRequest(c, "course deleted succesfully")
+	return
 }
 
 func GetCourses(c *gin.Context, db *gorm.DB) {
