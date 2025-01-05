@@ -17,7 +17,7 @@ func create_hash(p string) (string, error) {
 	return hashed_password, nil
 }
 
-func CreateAccount(c *gin.Context, db gorm.DB) {
+func CreateAccount(c *gin.Context, db *gorm.DB) {
 	var account models.Account
 	var fail_message = "failed to create account"
 	err := c.ShouldBindJSON(&account)
@@ -40,7 +40,7 @@ func CreateAccount(c *gin.Context, db gorm.DB) {
 	return
 }
 
-func DeleteAccount(c *gin.Context, db gorm.DB) {
+func DeleteAccount(c *gin.Context, db *gorm.DB) {
 	var fail_message = "failed to delete account"
 	course_id := c.Param("id")
 	if course_id == "" {

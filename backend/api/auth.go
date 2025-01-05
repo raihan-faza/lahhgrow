@@ -29,3 +29,7 @@ func CreateToken(c *gin.Context, username string, user_id string) (string, strin
 	}
 	return signed_access_token, signed_refresh_token, nil
 }
+
+func RefreshToken(c *gin.Context, refresh_token string) {
+	return
+}
