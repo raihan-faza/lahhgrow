@@ -1,14 +1,30 @@
 package api
 
 import (
+	"fmt"
+	"log"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/raihan-faza/lahhgrow/backend/models"
 	"github.com/raihan-faza/lahhgrow/backend/utils"
+	"gorm.io/gorm"
 )
 
-func CreateToken(c *gin.Context, username string, user_id string) (string, string, error) {
+func CreateToken(c *gin.Context, db *gorm.DB, username string, password string, user_id string) (string, string, error) {
+	var user models.Account
+	hashed_password, hash_err := utils.CreateHash(password)
+	if db.Find(&user, user_id).Error != nil {
+		log.Fatal("user not found")
+	}
+	if hash_err != nil {
+		panic(hash_err)
+	}
+	if hashed_password != user.Password {
+		log.Fatal("dont try to do funny stuff")
+		return "", "", fmt.Errorf("hahaha")
+	}
 	access_token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"userID":   user_id,
 		"username": username,
