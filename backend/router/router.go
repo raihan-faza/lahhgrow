@@ -11,7 +11,7 @@ func MainRouter(db *gorm.DB) *gin.Engine {
 	r.POST("/course", func(ctx *gin.Context) {
 		api.CreateCourse(ctx, db)
 	})
-	r.POST("/course/:id", func(ctx *gin.Context) {
+	r.PUT("/course/:id", func(ctx *gin.Context) {
 		api.UpdateCourse(ctx, db)
 	})
 	r.DELETE("/course/:id", func(ctx *gin.Context) {
@@ -22,6 +22,12 @@ func MainRouter(db *gorm.DB) *gin.Engine {
 	})
 	r.GET("/course/:id", func(ctx *gin.Context) {
 		api.GetCourse(ctx, db)
+	})
+	r.POST("/account", func(ctx *gin.Context) {
+		api.CreateAccount(ctx, db)
+	})
+	r.DELETE("/account/:id", func(ctx *gin.Context) {
+		api.DeleteAccount(ctx, db)
 	})
 	return r
 }
