@@ -29,5 +29,11 @@ func MainRouter(db *gorm.DB) *gin.Engine {
 	r.DELETE("/account/:id", func(ctx *gin.Context) {
 		api.DeleteAccount(ctx, db)
 	})
+	r.GET("/wallet/:id", func(ctx *gin.Context) {
+		api.GetBalance(ctx, db)
+	})
+	r.POST("/wallet/:id", func(ctx *gin.Context) {
+		api.AddBalance(ctx, db)
+	})
 	return r
 }
