@@ -1,6 +1,8 @@
 package api
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/raihan-faza/lahhgrow/backend/models"
 	"github.com/raihan-faza/lahhgrow/backend/responses"
@@ -27,7 +29,7 @@ func UpdateCourse(c *gin.Context, db *gorm.DB) {
 	var course models.Course
 	var input models.Course
 	var fail_message = "failed to update course"
-	course_id := c.DefaultQuery("id", "")
+	course_id := c.Param("id")
 	if course_id == "" {
 		responses.BadRequest(c, fail_message)
 		return
@@ -72,7 +74,7 @@ func GetCourses(c *gin.Context, db *gorm.DB) {
 	if db_err != nil {
 		responses.BadRequest(c, "course unavailable")
 	}
-	c.JSON(200, courses)
+	c.JSON(http.StatusOK, courses)
 	return
 }
 
@@ -83,6 +85,6 @@ func GetCourse(c *gin.Context, db *gorm.DB) {
 	if db_err != nil {
 		responses.BadRequest(c, "course unavailable")
 	}
-	c.JSON(200, course)
+	c.JSON(http.StatusOK, course)
 	return
 }

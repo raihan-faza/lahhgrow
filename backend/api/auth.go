@@ -18,13 +18,16 @@ func CreateToken(c *gin.Context, db *gorm.DB, username string, password string, 
 	if db.Find(&user, user_id).Error != nil {
 		log.Fatal("user not found")
 	}
+
 	if hash_err != nil {
 		panic(hash_err)
 	}
+
 	if hashed_password != user.Password {
-		log.Fatal("dont try to do funny stuff")
+		log.Fatal("somebody trying to do funny stuff")
 		return "", "", fmt.Errorf("hahaha")
 	}
+
 	access_token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"userID":   user_id,
 		"username": username,
