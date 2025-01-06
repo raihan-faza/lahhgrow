@@ -6,8 +6,8 @@
 - delete course (done)
 - update video
 - delete video
-- create account
-- delete account
+- create account (done)
+- delete account (done)
 - add payment
 - create certificate
 
