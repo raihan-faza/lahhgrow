@@ -10,4 +10,6 @@
 - delete account (done)
 - add payment
 - create certificate
-
+- landing page
+- course page
+- accout page
