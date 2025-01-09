@@ -12,7 +12,7 @@ import (
 // nanti ku setup payment gatewaynya
 func AddBalance(c *gin.Context, db *gorm.DB) {
 	var fail_message = "fail to add balance"
-	var req models.AddBalanceRequest
+	var req models.TopupRequest
 	var wallet models.Wallet
 	user_id := c.Param("id")
 	if user_id == "" {
@@ -27,10 +27,12 @@ func AddBalance(c *gin.Context, db *gorm.DB) {
 	if err != nil {
 		panic(err)
 	}
-	adding_err := wallet.AddBalance(req.Balance)
-	if adding_err != nil {
-		panic(adding_err)
-	}
+	/*
+		adding_err := wallet.AddBalance(req.Balance)
+		if adding_err != nil {
+			panic(adding_err)
+		}
+	*/
 	responses.GoodRequest(c, "balance added")
 	return
 }
