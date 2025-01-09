@@ -7,6 +7,7 @@ type TransactionDetails struct {
 	OrderId           string
 	GrossAmount       string
 	CustomerDetailsID int
+	Status            string
 }
 
 type CustomerDetails struct {
@@ -21,4 +22,6 @@ type CustomerDetails struct {
 	TransactionDetails []TransactionDetails
 }
 
-// i donno what am i doing smh
+type TopupRequest struct {
+	GrossAmount int
+}
