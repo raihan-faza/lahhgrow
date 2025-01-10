@@ -71,9 +71,9 @@ func CreateTransaction(c *gin.Context, gross_amount int64, db *gorm.DB) *snap.Re
 		BillAddr: &user_addr,
 		ShipAddr: &user_addr,
 	}
-	resp, err := s.CreateTransaction(GenerateSnapReq(&customer_detail, transaction_detail))
-	if err != nil {
-		panic(err)
+	resp, resp_err := s.CreateTransaction(GenerateSnapReq(&customer_detail, transaction_detail))
+	if resp_err != nil {
+		panic(resp_err)
 	}
 	return resp
 }
