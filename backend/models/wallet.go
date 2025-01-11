@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/go-co-op/gocron/v2"
 	"gorm.io/gorm"
@@ -19,7 +20,7 @@ type AddBalanceRequest struct {
 
 type WalletCronManager struct {
 	gorm.Model
-	Scheduler *gocron.Scheduler
+	Scheduler gocron.Scheduler
 	WalletID  uint
 	Wallet    Wallet
 }
@@ -32,10 +33,21 @@ func (w *Wallet) AddBalance(amount float64) error {
 	return nil
 }
 
-func (w *WalletCronManager) CutBalance(amount float64) error {
+func (w *WalletCronManager) StartCutBalance(amount float64) error {
 	if amount > w.Wallet.Balance {
 		return fmt.Errorf("you ran out of money")
 	}
-	w.Wallet.Balance = w.Wallet.Balance - amount
+	w.Scheduler.NewJob(
+		gocron.DurationJob(1*time.Minute),
+		gocron.NewTask(func() {
+			w.Wallet.Balance = w.Wallet.Balance - amount
+		}),
+	)
+	w.Scheduler.Start()
+	return nil
+}
+
+func (w *WalletCronManager) StopCutBalance() error {
+	w.Scheduler.StopJobs()
 	return nil
 }
