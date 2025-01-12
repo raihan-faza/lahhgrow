@@ -19,7 +19,6 @@ func CreateToken(c *gin.Context, db *gorm.DB, username string, password string, 
 	if db.Find(&user, user_id).Error != nil {
 		log.Fatal("user not found")
 	}
-
 	if hash_err != nil {
 		panic(hash_err)
 	}

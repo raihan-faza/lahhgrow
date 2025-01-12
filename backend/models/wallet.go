@@ -33,7 +33,8 @@ func (w *Wallet) AddBalance(amount float64) error {
 	return nil
 }
 
-func (w *WalletCronManager) StartCutBalance(amount float64) error {
+func (w *WalletCronManager) StartCutBalance() error {
+	var amount = float64(1000)
 	if amount > w.Wallet.Balance {
 		return fmt.Errorf("you ran out of money")
 	}

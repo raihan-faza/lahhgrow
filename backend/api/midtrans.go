@@ -21,16 +21,6 @@ func create_transaction() snap.ResponseWithMap {
 	return res
 }
 
-/*
-rencananya ini buat generate pembayaran topup
-nanti kan customer tinggal masukin nominal yang mau di topup, terus muncul page buat bayar kan
-berarti user perlu ngasih kita beberapa hal:
-  - jumlah uang yang mau di topup (ini lewat input form misalnya)
-  - wallet id nya (ini bisa kita query pake user id yang ada di jwt token)
-
-nah itu doang yang kita butuh di database.
-tapi, ini banyak perintilannya dari midtrans.
-*/
 func GenerateSnapReq(cust_detail *midtrans.CustomerDetails, transaction_detail midtrans.TransactionDetails) *snap.Request {
 	snapReq := &snap.Request{
 		TransactionDetails: transaction_detail,
@@ -40,9 +30,7 @@ func GenerateSnapReq(cust_detail *midtrans.CustomerDetails, transaction_detail m
 	return snapReq
 }
 
-// ini api buat topupnya
 func CreateTransaction(c *gin.Context, gross_amount int64, db *gorm.DB) *snap.Response {
-	//bind dulu data yang mau diambil, sisanya kita query di backend (jumlah uang, user id)
 	var account models.Account
 	user_token, err := DecodeJwt(GetJwtFromHeader(c))
 	if err != nil {
