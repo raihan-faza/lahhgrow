@@ -35,5 +35,11 @@ func MainRouter(db *gorm.DB) *gin.Engine {
 	r.POST("/wallet/:id", func(ctx *gin.Context) {
 		api.AddBalance(ctx, db)
 	})
+	r.POST("/wallet/start/:id", func(ctx *gin.Context) {
+		api.StartCutBalance(ctx, db)
+	})
+	r.POST("/wallet/stop/:id", func(ctx *gin.Context) {
+		api.StopCutBalance(ctx, db)
+	})
 	return r
 }
