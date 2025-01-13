@@ -12,7 +12,7 @@ def index():
 @app.route("/course", methods=["GET"])
 def course():
     data = get("http://localhost:8080/course")
-    return render_template("course.html")
+    return render_template("course.html", data=data)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -48,9 +48,20 @@ def register(request):
 
 @app.route("/login", methods=["GET", "POST"])
 def user_login():
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        json_data = {"username": username, "password": password}
+        res = post("http://localhost:8080/login")
     return render_template("login.html")
 
 
 @app.route("/dashboard", methods=["GET"])
 def dashboard():
+    # harus ambil data account, hit apinya
     return render_template("dashboard.html")
+
+
+@app.route("/course/:id", methods=["GET"])
+def watch_course():
+    return
